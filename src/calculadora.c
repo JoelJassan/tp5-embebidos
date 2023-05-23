@@ -53,13 +53,17 @@
 /*---  Public Data Declaration  ---------------------------------------------------------------- */
 //typedef struct operacion_s * operacion_t;
 //
+
+typedef struct operacion_s * operacion_t;
+
 typedef struct operacion_s {
     char operador;
     funciont_t funcion;
-}* operacion_t;
+    operacion_t siguiente;
+};
 
 struct calculadora_s {
-    struct operacion_s operaciones[OPERACIONES];
+    operacion_t operaciones;
 };
 
 
@@ -79,9 +83,9 @@ struct calculadora_s {
 
 operacion_t BuscarOperacion(calculadora_t calculadora, char operador) {
     operacion_t result = NULL;
-    for (int indice = 0; indice < OPERACIONES; indice++) {
-        if (calculadora->operaciones[indice].operador == operador) {
-            result = &calculadora->operaciones[indice];
+    for (operacion_t actual = calculadora->operaciones; actual->siguiente != NULL; actual = actual->siguiente) {
+        if (actual->operador == operador) {
+            result = actual;
             break;
         }
     }
