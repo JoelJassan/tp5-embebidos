@@ -50,17 +50,15 @@
 
 /*---  Private Data Declaration  --------------------------------------------------------------- */
 
-/*---  Public Data Declaration  ---------------------------------------------------------------- */
-//typedef struct operacion_s * operacion_t;
-//
-
 typedef struct operacion_s * operacion_t;
 
 typedef struct operacion_s {
     char operador;
     funciont_t funcion;
     operacion_t siguiente;
-};
+} * op;                     //a este puntero no lo uso, pero tengo warning si no defino un nombre
+
+/*---  Public Data Declaration  ---------------------------------------------------------------- */
 
 struct calculadora_s {
     operacion_t operaciones;
@@ -106,10 +104,13 @@ calculadora_t CrearCalculadora(void) {
 
 bool AgregarOperacion(calculadora_t calculadora, char operador, funciont_t funcion) {
     operacion_t operacion = BuscarOperacion(calculadora, '\0');
+    operacion = malloc(sizeof(struct operacion_s));
 
     if ((operacion) && !BuscarOperacion(calculadora,operador)) {
         operacion->operador = operador;
-        operacion->operador = operador;
+        operacion->funcion = funcion;
+        operacion->siguiente = calculadora->operaciones;
+        calculadora->operaciones = operacion;
     }
     
     return (operacion != NULL);
