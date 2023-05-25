@@ -1,6 +1,6 @@
 /*
  * 
- * Copyright 202X, Joel Jassan <joeljassan@hotmail.com>
+ * Copyright may/2023, Joel Jassan <joeljassan@hotmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,8 +31,10 @@
  */
 
 
-/** \brief Includes y Definitions de "calculadora.c" */
-
+/** \brief Declaracion de tipos y definicion de funciones de forma global (public) de la
+ * calculadora.
+ * 
+*/
 
 
 #ifndef CALCULADORA_H
@@ -47,16 +49,47 @@
 
 /*---  Public Data Declaration  ---------------------------------------------------------------- */
 
+/**
+ * @brief Puntero a la estructura calculadora_s.
+ * El tipo de dato al que apunta es la calculadora que guarda las operaciones
+ */
 typedef struct calculadora_s * calculadora_t;
 
+/**
+ * @brief Funcion de Callback
+ * Recibe 2 enteros y devuelve un entero. Solo se pueden usar este tipo de funciones
+ */
 typedef int(*funciont_t)(int,int);
 
 /*---  Public Function Declaration  ------------------------------------------------------------ */
 
+/**
+ * @brief Crea la calculadora, creando el puntero a la direccion de memoria donde empieza la
+ * calculadora creada.
+ * El espacio se inicializa en NULL.
+ * 
+ * @return calculadora_t 
+ */
 calculadora_t CrearCalculadora(void);
 
+/**
+ * @brief Agrega operaciones a la calculadora a partir de un operador ingresado.
+ * 
+ * @param calculadora puntero a la calculadora creada
+ * @param operador operador que se quiere agregar
+ * @param funcion funcion que resuelve el operador que se quiere agregar
+ * @return true si el operador se agregó
+ * @return false si el operador no se agregó
+ */
 bool AgregarOperacion(calculadora_t calculadora, char operador, funciont_t funcion);
 
+/**
+ * @brief Calcula una operacion a partir de una cadena ingresada. Se pone en formato "a(operador)b"
+ * 
+ * @param calculadora puntero a la calculadora creada
+ * @param cadena cadena a calcular
+ * @return int 
+ */
 int Calcular(calculadora_t calculadora, char * cadena);
 
 /*---  End of File  ---------------------------------------------------------------------------- */

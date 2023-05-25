@@ -31,7 +31,7 @@
 
 
 
-/** \brief Formato (struct) y Functions de la calculadora
+/** \brief Codigo para creacion y uso de una calculadora.
  * 
 */
 
@@ -46,13 +46,23 @@
 
 /*---  Private Data Declaration  --------------------------------------------------------------- */
 
+/**
+ * @brief Puntero a la posicion de memoria de la estructura operacion_s.
+ * 
+ */
 typedef struct operacion_s * operacion_t;
 
+/**
+ * @brief Estructura que contiene el operador, la funcion que resuelve dicho operador, y el puntero
+ * al siguiente operador (operacion_s).
+ * 
+ * @note Se define un puntero a la operacion por problema de compilacion.
+ */
 typedef struct operacion_s {
     char operador;
     funciont_t funcion;
     operacion_t siguiente;
-} * op;
+} * op;     
 
 /*---  Public Data Declaration  ---------------------------------------------------------------- */
 
@@ -63,6 +73,13 @@ struct calculadora_s {
 
 /*---  Private Function Declaration  ----------------------------------------------------------- */
 
+/**
+ * @brief Busca una operacion a partir de un operador ingresado
+ * 
+ * @param calculadora punteor a la calculadora creada
+ * @param operador operador que se quiere encontrar
+ * @return operacion_t, puntero a la operacion que contiene al operador
+ */
 operacion_t BuscarOperacion(calculadora_t calculadora, char operador);
 
 /*---  Public Function Declaration  ------------------------------------------------------------ */
@@ -79,6 +96,7 @@ operacion_t BuscarOperacion(calculadora_t calculadora, char operador);
 
 operacion_t BuscarOperacion(calculadora_t calculadora, char operador) {
     operacion_t result = NULL;
+
     if (calculadora != NULL){
         for (operacion_t actual = calculadora->operaciones; actual->siguiente != NULL; actual = actual->siguiente) {
             if (actual->operador == operador) {

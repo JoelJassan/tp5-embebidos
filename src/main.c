@@ -31,7 +31,8 @@
 
 
 
-/** \brief 
+/** \brief Calculadora con operaciones basicas de suma, resta, multiplicacion y division.
+ * @note Se realiza toda la funcionalidad del programa a traves de funciones de callback.
  * 
 */
 
@@ -60,18 +61,22 @@
 
 /*---  Private Function Implementation  -------------------------------------------------------- */
 
+// Suma de enteros, a y b
 int suma(int a, int b) {
     return a + b;
 }
 
+// Resta de enteros, a y b
 int resta(int a, int b) {
     return a - b;
 }
 
+// Multiplicacion de enteros, a y b
 int multiplicacion(int a, int b) {
     return a * b;
 }
 
+// Division de enteros, a y b
 int division(int a, int b) {
     return a / b;
 }
