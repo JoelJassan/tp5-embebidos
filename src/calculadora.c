@@ -44,10 +44,6 @@
 
 /* ---  Macros definitions  -------------------------------------------------------------------- */
 
-#ifndef OPERACIONES
-    #define OPERACIONES 16
-#endif
-
 /*---  Private Data Declaration  --------------------------------------------------------------- */
 
 typedef struct operacion_s * operacion_t;
@@ -56,7 +52,7 @@ typedef struct operacion_s {
     char operador;
     funciont_t funcion;
     operacion_t siguiente;
-} * op;                     //a este puntero no lo uso, pero tengo warning si no defino un nombre
+} * op;
 
 /*---  Public Data Declaration  ---------------------------------------------------------------- */
 
@@ -66,6 +62,8 @@ struct calculadora_s {
 
 
 /*---  Private Function Declaration  ----------------------------------------------------------- */
+
+operacion_t BuscarOperacion(calculadora_t calculadora, char operador);
 
 /*---  Public Function Declaration  ------------------------------------------------------------ */
 
@@ -81,10 +79,12 @@ struct calculadora_s {
 
 operacion_t BuscarOperacion(calculadora_t calculadora, char operador) {
     operacion_t result = NULL;
-    for (operacion_t actual = calculadora->operaciones; actual->siguiente != NULL; actual = actual->siguiente) {
-        if (actual->operador == operador) {
-            result = actual;
-            break;
+    if (calculadora != NULL){
+        for (operacion_t actual = calculadora->operaciones; actual->siguiente != NULL; actual = actual->siguiente) {
+            if (actual->operador == operador) {
+                result = actual;
+                break;
+            }
         }
     }
 
@@ -95,9 +95,9 @@ operacion_t BuscarOperacion(calculadora_t calculadora, char operador) {
 
 calculadora_t CrearCalculadora(void) {
     calculadora_t result = malloc(sizeof(struct calculadora_s));
-    if (result) {
+
+    if (result != NULL) 
         memset(result, 0, sizeof(struct calculadora_s));
-    }
 
     return result;
 }
@@ -110,6 +110,7 @@ bool AgregarOperacion(calculadora_t calculadora, char operador, funciont_t funci
         operacion->operador = operador;
         operacion->funcion = funcion;
         operacion->siguiente = calculadora->operaciones;
+
         calculadora->operaciones = operacion;
     }
     
