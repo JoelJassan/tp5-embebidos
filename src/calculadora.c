@@ -103,10 +103,12 @@ calculadora_t CrearCalculadora(void) {
 }
 
 bool AgregarOperacion(calculadora_t calculadora, char operador, funciont_t funcion) {
-    operacion_t operacion = BuscarOperacion(calculadora, '\0');
-    operacion = malloc(sizeof(struct operacion_s));
+    operacion_t operacion = NULL;
 
-    if ((operacion) && !BuscarOperacion(calculadora,operador)) {
+    if (!BuscarOperacion(calculadora,operador))
+        operacion = malloc(sizeof(struct operacion_s));
+
+    if (operacion) {
         operacion->operador = operador;
         operacion->funcion = funcion;
         operacion->siguiente = calculadora->operaciones;
