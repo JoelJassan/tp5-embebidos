@@ -55,14 +55,12 @@ typedef struct operacion_s * operacion_t;
 /**
  * @brief Estructura que contiene el operador, la funcion que resuelve dicho operador, y el puntero
  * al siguiente operador (operacion_s).
- * 
- * @note Se define un puntero a la operacion por problema de compilacion.
  */
-typedef struct operacion_s {
+struct operacion_s {
     char operador;
     funciont_t funcion;
     operacion_t siguiente;
-} * op;     
+};
 
 /*---  Public Data Declaration  ---------------------------------------------------------------- */
 
@@ -96,14 +94,14 @@ operacion_t BuscarOperacion(calculadora_t calculadora, char operador);
 
 operacion_t BuscarOperacion(calculadora_t calculadora, char operador) {
     operacion_t result = NULL;
+    operacion_t actual = calculadora->operaciones;
 
-    if (calculadora != NULL){
-        for (operacion_t actual = calculadora->operaciones; actual->siguiente != NULL; actual = actual->siguiente) {
-            if (actual->operador == operador) {
-                result = actual;
-                break;
-            }
+    while(actual != NULL){
+        if (actual->operador == operador) {
+            result = actual;
+            break;
         }
+        actual = actual->siguiente;
     }
 
     return result;
@@ -121,20 +119,23 @@ calculadora_t CrearCalculadora(void) {
 }
 
 bool AgregarOperacion(calculadora_t calculadora, char operador, funciont_t funcion) {
-    operacion_t operacion = NULL;
+    bool result = BuscarOperacion(calculadora,operador);
 
-    if (!BuscarOperacion(calculadora,operador))
-        operacion = malloc(sizeof(struct operacion_s));
+    if (!result){
+        operacion_t operacion = malloc(sizeof(struct operacion_s));
 
-    if (operacion) {
-        operacion->operador = operador;
-        operacion->funcion = funcion;
-        operacion->siguiente = calculadora->operaciones;
+        if(operacion){
+            operacion->operador = operador;
+            operacion->funcion = funcion;
+            operacion->siguiente = calculadora->operaciones;
 
-        calculadora->operaciones = operacion;
+            calculadora->operaciones = operacion;
+        }
+
+        result = (operacion != NULL);
     }
     
-    return (operacion != NULL);
+    return result;
 }
 
 int Calcular(calculadora_t calculadora, char * cadena) {
