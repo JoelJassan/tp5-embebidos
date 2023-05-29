@@ -94,6 +94,12 @@ int main (void) {
 
     resultado = Calcular(calculadora, "4+4");
     printf("Resultado %i\r\n", resultado);
+    resultado = Calcular(calculadora, "4-4");
+    printf("Resultado %i\r\n", resultado);
+    resultado = Calcular(calculadora, "4*4");
+    printf("Resultado %i\r\n", resultado);
+    resultado = Calcular(calculadora, "4/4");
+    printf("Resultado %i\r\n", resultado);
 }
 
 /*---  End of File  ---------------------------------------------------------------------------- */
